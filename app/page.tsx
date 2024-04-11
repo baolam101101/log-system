@@ -47,7 +47,7 @@ const LoginPage = () => {
               className="w-full border border-gray-300 rounded-md py-2 px-4"
             />
           </div>
-          <a href="/accounts/register" className="flex text-blue-600">Register</a>
+          <a href="/accounts/register" className="flex text-blue-600 float-right">Register</a>
           <button
             type="submit"
             className="bg-blue-500 text-white rounded-md py-2 px-4 w-full hover:bg-blue-600"

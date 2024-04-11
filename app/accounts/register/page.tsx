@@ -20,7 +20,7 @@ const RegisterPage = () => {
     if (password === confirmPassword) {
       alert('Registration successful!');
       // You can potentially redirect to a different page after registration
-      router.push('/'); // Redirect to homepage
+      router.push('/accounts/login'); // Redirect to homepage
     } else {
       alert('Passwords do not match!');
     }
@@ -77,7 +77,7 @@ const RegisterPage = () => {
               className="w-full border border-gray-300 rounded-md py-2 px-4"
             />
           </div>
-          <a href="/accounts/login" className="flex text-blue-600">Login</a>
+          <a href="/accounts/login" className="flex text-blue-600 float-right">Login</a>
           <button
             type="submit"
             className="bg-blue-500 text-white rounded-md py-2 px-4 w-full hover:bg-blue-600"
