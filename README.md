@@ -10,20 +10,14 @@
 # SITEMAP
 ![alt text](docs/images/sitemap.png)
 # LAYOUT
-Login
 ![alt text](docs\wireframe\login.png)
-
 Register
 ![alt text](docs\wireframe\register.png)
-
 Files List
 ![alt text](docs\wireframe\fileslist.png)
-
 Upload File
 ![alt text](docs\wireframe\uploadfile.png)
-
 Detail
-![alt text](docs\image\detail.png)
-
+![alt text](docs\wireframe\detail.png)
 Edit
 ![alt text](docs\wireframe\edit.png)
