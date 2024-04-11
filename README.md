@@ -6,7 +6,7 @@
 # SEQ DIAGRAM
 ![alt text](out/docs/images/file.seq.png)
 # ERD 
-![alt text](out/docs/images/ERD.png)
+![alt text](docs/ERD.png)
 # SITEMAP
 ![alt text](out/docs/images/sitemap.png)
 # LAYOUT
