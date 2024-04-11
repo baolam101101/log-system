@@ -23,7 +23,7 @@ Upload File
 ![alt text](docs\wireframe\uploadfile.png)
 
 Detail
-![alt text](docs\wireframe\detail.png)
+![alt text](docs\image\detail.png)
 
 Edit
 ![alt text](docs\wireframe\edit.png)
