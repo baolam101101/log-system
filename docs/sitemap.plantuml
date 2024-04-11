@@ -1,0 +1,27 @@
+@startuml
+title Site map
+
+participant "Admin" as A
+participant "Manage file" as F
+participant "User" as U
+participant "Upload file" as Uf
+participant "Other page" as O
+
+A -> F: View files list
+F -> A: Download
+A -> F: Searching
+F -> A: Filter
+F -> A: View detail
+A -> O: Login/Logout
+
+U -> Uf: Upload file
+Uf -> U: View files list
+Uf -> U: Delete
+Uf -> U: Edit
+Uf -> U: View detail
+U -> O: Login/Logout
+
+note left of F: Searching by name and title. Filter by date.
+note left of Uf: Allows you to upload files, enter name, title tag, select file type, edit and delete.
+
+@enduml

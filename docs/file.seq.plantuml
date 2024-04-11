@@ -1,0 +1,25 @@
+@startuml
+actor Admin as A
+actor User as U
+
+A -> System: Searching by name, des
+System -> A: Show files list
+A -> System: Filter by date
+System -> A: Show files lists
+A -> System: Download file
+System -> A: Display success message
+
+
+U -> System: Add new file
+System -> U: Display success message
+U -> System: Delete file
+System -> U: Confirm file deletion
+U -> System: OK
+System -> U: Display success message
+U -> System: Edit file
+System -> U: Display success message
+U -> System: View file detail
+System -> U: Show more file detail
+
+
+@enduml

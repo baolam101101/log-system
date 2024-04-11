@@ -1,0 +1,10 @@
+@startuml
+|Admin|
+start
+:login;
+|#AntiqueWhite|System|
+:show;
+|Admin|
+:Manage File;
+stop
+@enduml
