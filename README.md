@@ -1,13 +1,13 @@
 # USE CASES
-![alt text](out/docs/images/usecases.png)
+![alt text](docs/images/usecases.png)
 # ACTIVITY DIAGRAM
-![alt text](out/docs/images/admin.activity.diagram.png)
-![alt text](out/docs/images/user.activity.diagram.png)
+![alt text](docs/images/admin.activity.diagram.png)
+![alt text](docs/images/user.activity.diagram.png)
 # SEQ DIAGRAM
-![alt text](out/docs/images/file.seq.png)
+![alt text](docs/images/file.seq.png)
 # ERD 
-![alt text](docs/ERD.png)
+![alt text](docs/images/ERD.png)
 # SITEMAP
-![alt text](out/docs/images/sitemap.png)
+![alt text](docs/images/sitemap.png)
 # LAYOUT
 
