@@ -1,35 +1,18 @@
 @startuml
 left to right direction
-actor Admin as g
-actor User as f
-
-package Log {
-  usecase "Login" as UC1
-  usecase "Upload File" as UC2
-  usecase "Searching" as UC3
-  usecase "Filter" as UC4
+actor Guest as g
+package Professional {
+  actor Chef as c
+  actor "Food Critic" as fc
 }
-
-package File {
-  usecase "Login" as UC5
-  usecase "Upload File" as UC6
-  usecase "Create " as UC7
-  usecase "View" as UC8
-  usecase "Edit" as UC9
-  usecase "Delete" as UC10
-
+package Restaurant {
+  usecase "Eat Food" as UC1
+  usecase "Pay for Food" as UC2
+  usecase "Drink" as UC3
+  usecase "Review" as UC4
 }
-
+fc --> UC4
 g --> UC1
 g --> UC2
-UC2 -- UC3
-UC2 -- UC4
-
-f --> UC6
-f --> UC5
-UC6 -- UC7
-UC6 -- UC8
-UC6 -- UC9
-UC6 -- UC10
-
+g --> UC3
 @enduml
