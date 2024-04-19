@@ -4,9 +4,9 @@ import "../../globals.css";
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import axios from "axios";
 
 const RegisterPage = () => {
-  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -15,14 +15,24 @@ const RegisterPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Implement user registration logic here
-    // This example simulates a successful registration
-    if (password === confirmPassword) {
-      alert('Registration successful!');
-      // You can potentially redirect to a different page after registration
-      router.push('/accounts/login'); // Redirect to homepage
+    const registerData = {
+      email,
+      password,
+      confirmPassword
+    };
+
+    try {
+    const response = await axios.post("/api/auth/login", registerData);
+
+    if (response.data.success) {
+      router.push("/");
     } else {
-      alert('Passwords do not match!');
+      alert(response.data.message || "Register failed!");
+    }
+  }
+    catch (error) {
+    console.log(error);
+    alert("Register failed!!!");
     }
   };
 
@@ -31,17 +41,6 @@ const RegisterPage = () => {
       <div className="bg-white rounded-lg shadow-md p-8 w-full max-w-md">
         <h1 className="text-2xl font-bold mb-4">Register</h1>
         <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label htmlFor="name" className="block mb-2">Name</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="w-full border border-gray-300 rounded-md py-2 px-4"
-            />
-          </div>
           <div className="mb-4">
             <label htmlFor="email" className="block mb-2">Email</label>
             <input
@@ -77,7 +76,7 @@ const RegisterPage = () => {
               className="w-full border border-gray-300 rounded-md py-2 px-4"
             />
           </div>
-          <a href="/accounts/login" className="flex text-blue-600 float-right">Login</a>
+          <a href="/" className="flex text-blue-600 float-right">Login</a>
           <button
             type="submit"
             className="bg-blue-500 text-white rounded-md py-2 px-4 w-full hover:bg-blue-600"

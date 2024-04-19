@@ -4,19 +4,32 @@ import "./globals.css";
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import axios from "axios";
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const router = useRouter();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault(); 
 
-    if (email === 'demo@example.com' && password === 'password123') {
-      router.push('/files');
-    } else {
-      alert('Wrong login information!');
+    const loginData = {
+      email,
+      password
+    };
+    
+    try {
+      const response = await axios.post("/api/auth/login", loginData);
+
+      if (response.data.success) {
+        router.push("/files");
+      } else {
+        alert(response.data.message || 'Login failed!');
+      }
+    } catch (error) {
+      console.log(error);
+      alert('Login failed!!!');
     }
   };
 
