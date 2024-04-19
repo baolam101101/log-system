@@ -111,9 +111,9 @@ function FileDetails() {
     <div>
       {fileDetails ? (
         <div>
-          <h1>Name: {fileDetails.name}</h1>
+          <h1>{fileDetails.name}</h1>
           <p>Type: {fileDetails.type}</p>
-          <p>Size: {fileDetails.size}</p>
+          <p>Size: {fileDetails.size} bytes</p>
           <p>Date Created: {new Date(fileDetails.createdAt).toLocaleString()}</p>
           <p>Created By: {fileDetails.createdBy}</p>
         </div>
