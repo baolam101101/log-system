@@ -5,8 +5,9 @@ import Link from "next/link";
 
 function FileDetails( {params}: any ) {
   const [fileDetails, setFileDetails] = useState(null);
+  
   useEffect(() => {
-    const fetchFileDetails = async () => {
+    const getFileById = async () => {
       try {
         const {data} = await axios.get(
           `https://jsonplaceholder.typicode.com/posts/${params.id}`
@@ -18,7 +19,7 @@ function FileDetails( {params}: any ) {
       }
     };
     if (params.id) {
-      fetchFileDetails();
+      getFileById();
     }
     
   }, [params.id]);
@@ -47,7 +48,7 @@ function FileDetails( {params}: any ) {
               Back to List
             </button>
           </Link>
-          <Link href={"/files/"}>
+          <Link href={`/files/edit/${params.id}`}>
             <button className="m-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
               Edit
             </button>
