@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-async-client-component */
 // "use client";
 
 // import { useState, useEffect } from "react";
@@ -78,50 +79,89 @@
 
 // export default FileDetail;
 
-// // export default function FileDetails({ params }: { params: { fileId: string } }) {
-// //   return <h1>Detail about product {params.fileId}</h1>;
-// // }
+// 'use client';
 
-'use client'
-import { useRouter } from 'next/router';
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+// async function getData() {
+//   const res = await fetch('https://jsonplaceholder.typicode.com/todos/1')
 
-function FileDetails() {
-  const router = useRouter();
-  const { id } = router.query;
+//   if (!res.ok) {
+//     throw new Error('Failed to fetch data')
+//   }
+
+//   return res.json()
+// }
+
+// export default async function FileDetails() {
+//   const data = await getData()
+//   console.log("Hello", data)
+//   return (
+//     <div>
+
+//     </div>
+//   )
+// }
+
+"use client";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import Link from "next/link";
+
+function FileDetails( {id} ) {
   const [fileDetails, setFileDetails] = useState(null);
-
   useEffect(() => {
     const fetchFileDetails = async () => {
       try {
-        const response = await axios.get(`/api/files/${id}`);
-        setFileDetails(response.data);
+        const res = await axios.get(
+          `https://jsonplaceholder.typicode.com/posts/${id}`
+        );
+        // const res = await axios.get(`/api/files/${id}`);
+        setFileDetails(res.data);
       } catch (error) {
         console.error(error);
       }
-    }
-
-    if (id) {
+    };
+    if (!id) {
+      console.log("don't have id")
       fetchFileDetails();
     }
-  }, [id])
+    
+  }, [id]);
 
   return (
     <div>
       {fileDetails ? (
         <div>
-          <h1>{fileDetails.name}</h1>
-          <p>Type: {fileDetails.type}</p>
-          <p>Size: {fileDetails.size} bytes</p>
-          <p>Date Created: {new Date(fileDetails.createdAt).toLocaleString()}</p>
-          <p>Created By: {fileDetails.createdBy}</p>
+          <h1 className="text-2xl font-bold mb-4 text-center">File Details</h1>
+          <div className="flex flex-col mb-4">
+            <p className="font-bold">Name: {fileDetails.id}</p>
+          </div>
+          <div className="flex flex-col mb-4">
+            <p className="font-bold">Type: {fileDetails.type}</p>
+          </div>
+          <div className="flex flex-col mb-4">
+            <p className="font-bold">
+              Date Created: {new Date(fileDetails.createdAt).toLocaleString()}
+            </p>
+          </div>
+          <div className="flex flex-col mb-4">
+            <p className="font-bold">Created By: {fileDetails.createdBy}</p>
+          </div>
+          <Link href={"/files/"}>
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+              Back to List
+            </button>
+          </Link>
+          <Link href={"/files/"}>
+            <button className="m-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+              Edit
+            </button>
+          </Link>
         </div>
       ) : (
         <p>Loading...</p>
       )}
     </div>
-  )
+  );
 }
 
 export default FileDetails;

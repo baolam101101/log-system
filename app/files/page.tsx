@@ -7,9 +7,6 @@ const View = () => {
   const [files, setFiles] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [selectedDate, setSelectedDate] = useState(null);
-
-
-  // useEffect(() => {
   //   const data = [
   //     {
   //       id: 1,
@@ -89,8 +86,8 @@ const View = () => {
     useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("/api/files");
-        setFiles(response.data);
+        const {data} = await axios.get(`https://jsonplaceholder.typicode.com/posts`);
+        setFiles(data);
       } catch (err) {
         console.error("Error fetching files:", err);
       }
@@ -104,8 +101,8 @@ const View = () => {
     if (searchText) {
       filteredData = filteredData.filter(
         (file) =>
-          file.name.toLowerCase().includes(searchText.toLowerCase()) ||
-          file.type.toLowerCase().includes(searchText.toLowerCase())
+          // file.name.toLowerCase().includes(searchText.toLowerCase()) ||
+          file.title.toLowerCase().includes(searchText.toLowerCase())
       );
     }
 
@@ -117,7 +114,7 @@ const View = () => {
       );
     }
 
-    return filteredData;
+    return files.length > 0 ? filteredData : [];
   }, [files, searchText, selectedDate]);
 
   const handleSearchChange = (event) => {
@@ -158,7 +155,10 @@ const View = () => {
           onChange={(event) => handleDateChange(event.target.value)}
         />
       </div>
-      <a href="files/create" className="border p-2 bg-black text-white float-right bg-blue-600">
+      <a
+        href="files/create"
+        className="border p-2 bg-black text-white float-right bg-blue-600"
+      >
         Upload file
       </a>
       <table className="table-auto w-full">
@@ -173,17 +173,26 @@ const View = () => {
         <tbody>
           {filteredFiles.map((file) => (
             <tr key={file.name} className="border-b hover:bg-gray-100">
-              <td className="p-2">{file.name}</td>
+              <td className="p-2">{file.title}</td>
               <td className="p-2">{file.type}</td>
-              <td className="p-2">{file.datetime.toLocaleString()}</td>
-              <td className="p-2">{file.storageSize} bytes</td>
+              {/* <td className="p-2">{file.datetime.toLocaleString()}</td> */}
+              <td className="p-2">{file.id} bytes</td>
               <td className="p-2">
                 {file.id && (
-                  <Link href={`/files/${file.id}`}>
+                  <Link href={`/files/detail/${file.id}`}>
                     <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                       Detail
-                   </button>  
-                 </Link>
+                      Detail
+                    </button>
+                  </Link>
+                )}
+              </td>
+              <td className="p-2">
+                {file.id && (
+                  <Link href={`/files/edit/${file.id}`}>
+                    <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                      Edit
+                    </button>
+                  </Link>
                 )}
               </td>
               <td>
