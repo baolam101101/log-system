@@ -8,6 +8,9 @@ import axios from "axios";
 
 const RegisterPage = () => {
   const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
+  const [address, setAddress] = useState('');
+  const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const router = useRouter();
@@ -15,8 +18,16 @@ const RegisterPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (password !== confirmPassword) {
+      alert("Password and confirm password do not match!");
+      return;
+    }
+
     const registerData = {
       email,
+      name,
+      address,
+      phone,
       password,
       confirmPassword
     };
@@ -37,11 +48,11 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
+    <div className="flex flex-col items-center justify-center min-h-screen">
       <div className="bg-white rounded-lg shadow-md p-8 w-full max-w-md">
         <h1 className="text-2xl font-bold mb-4">Register</h1>
         <form onSubmit={handleSubmit}>
-          <div className="mb-4">
+          <div className="mb-6">
             <label htmlFor="email" className="block mb-2">Email</label>
             <input
               type="email"
@@ -49,6 +60,39 @@ const RegisterPage = () => {
               name="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              className="w-full border border-gray-300 rounded-md py-2 px-4"
+            />
+          </div>
+          <div className="mb-6">
+            <label htmlFor="name" className="block mb-2">Name</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="w-full border border-gray-300 rounded-md py-2 px-4"
+            />
+          </div>
+          <div className="mb-6">
+            <label htmlFor="address" className="block mb-2">Address</label>
+            <input
+              type="text"
+              id="address"
+              name="address"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              className="w-full border border-gray-300 rounded-md py-2 px-4"
+            />
+          </div>
+          <div className="mb-6">
+            <label htmlFor="phone" className="block mb-2">Phone</label>
+            <input
+              type="number"
+              id="phone"
+              name="phone"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
               className="w-full border border-gray-300 rounded-md py-2 px-4"
             />
           </div>

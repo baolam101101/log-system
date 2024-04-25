@@ -71,7 +71,7 @@ function CreateFileForm() {
           <ul>
             <li>Name: {files.name}</li>
             <li>Type: {files.type}</li>
-            <li>Storage Size: {files.size}</li>
+            <li>Storage Size: {files.size} bytes</li>
             <li>Date Created: {DateTime.toLocaleString()}</li>
             <li>Created By: </li>
           </ul>

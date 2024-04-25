@@ -25,9 +25,9 @@ function FileDetails( {params}: any ) {
   }, [params.id]);
 
   return (
-    <div>
+    <div className="container">
       {fileDetails ? (
-        <div>
+        <div className="container m-auto p-8">
           <h1 className="text-2xl font-bold mb-4 text-center">File Details</h1>
           <div className="flex flex-col mb-4">
             <p className="font-bold">Name: {fileDetails.id}</p>

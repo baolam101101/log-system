@@ -16,7 +16,7 @@ const FileEdit = ( {params} : any ) => {
       setError(null);
 
       try {
-        const response = await axios.get(`https://jsonplaceholder.typicode.com/posts/${params.id}`);
+        const response = await axios.put(`https://jsonplaceholder.typicode.com/posts/${params.id}`);
         setFileData(response.data);
       } catch (err) {
         console.log(err);
@@ -44,7 +44,7 @@ if (params.id) {
   }
 
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto p-8">
       <h1 className="text-2xl font-bold mb-4 text-center">File Edit</h1>
       <div className="flex flex-col mb-4">
         <p className="font-bold">Name:</p>

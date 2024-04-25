@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
 
-const View = () => {
+const Files = () => {
   const [files, setFiles] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [selectedDate, setSelectedDate] = useState(null);
@@ -101,7 +101,7 @@ const View = () => {
     if (searchText) {
       filteredData = filteredData.filter(
         (file) =>
-          // file.name.toLowerCase().includes(searchText.toLowerCase()) ||
+          // file.type.toLowerCase().includes(searchText.toLowerCase()) ||
           file.title.toLowerCase().includes(searchText.toLowerCase())
       );
     }
@@ -126,21 +126,23 @@ const View = () => {
   };
 
   const handleDelete = async (id) => {
-    try {
-      await axios.delete(`/api/files/${id}`);
-      setFiles(files.filter((file) => file.id !== id));
-    } catch (error) {
-      alert("Error deleting file!");
+    if (window.confirm("Do you want to delete this file?")) {
+      try {
+        await axios.delete(`https://jsonplaceholder.typicode.com/posts/${id}`);
+        setFiles(files.filter((file) => file.id !== id));
+      } catch (error) {
+        alert("Error deleting file!");
+      }
     }
   };
 
   return (
-    <div className="container mx-auto">
-      <Link href="/accounts/login">
+    <div className="container mx-auto p-8">
+      {/* <Link href="/accounts/login">
         <button className="bg-black hover:bg-red-600 text-white font-bold py-2 px-4 rounded float-right">
           Log out
         </button>
-      </Link>
+      </Link> */}
       <h1 className="text-2xl font-bold mb-4 text-center">Files List</h1>
       <div className="flex mb-4">
         <input
@@ -216,4 +218,4 @@ const View = () => {
   );
 };
 
-export default View;
+export default Files;
