@@ -101,8 +101,8 @@ const Files = () => {
     if (searchText) {
       filteredData = filteredData.filter(
         (file) =>
-          // file.type.toLowerCase().includes(searchText.toLowerCase()) ||
-          file.title.toLowerCase().includes(searchText.toLowerCase())
+          file.email.toLowerCase().includes(searchText.toLowerCase()) ||
+          file.name.toLowerCase().includes(searchText.toLowerCase())
       );
     }
 

@@ -5,7 +5,7 @@ export default function Nav() {
   return (
     <header>
       <nav
-        className="flex items-center justify-between p-6 lg:px-8 h-20 border border-t-0 border-l-0 border-b-gray-600"
+        className="flex items-center bg-blue-300 justify-between p-6 lg:px-8 h-20 border border-t-0 border-l-0 border-b-gray-600"
         aria-label="Global"
       >
         <div className="flex lg:flex-1">
@@ -19,7 +19,7 @@ export default function Nav() {
             Files List
           </a>
         </div>
-        <Link className="m-1.5 p-1.5" href="/files">Profile</Link>
+        <Link className="m-1.5 p-1.5" href="/profile">Profile</Link>
       </nav>
     </header>
   );

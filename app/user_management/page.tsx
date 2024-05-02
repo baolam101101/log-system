@@ -12,7 +12,7 @@ const UserManagement = () => {
     const fetchData = async () => {
       try {
         const { data } = await axios.get(
-          `https://jsonplaceholder.typicode.com/posts`
+          `https://jsonplaceholder.typicode.com/users`
         );
         setFiles(data);
       } catch (err) {
@@ -27,18 +27,19 @@ const UserManagement = () => {
 
     if (searchText) {
       filteredData = filteredData.filter((file) =>
-        // file.type.toLowerCase().includes(searchText.toLowerCase()) ||
-        file.title.toLowerCase().includes(searchText.toLowerCase())
+        file.email.toLowerCase().includes(searchText.toLowerCase()) ||
+        file.phone.toLowerCase().includes(searchText.toLowerCase())
       );
     }
 
     if (selectedDate) {
       filteredData = filteredData.filter(
         (file) =>
-          new Date(file.datetime.toISOString()).getUTCDate() ===
+          file.dob && new Date(file.dob.toISOString()).getUTCDate() ===
           new Date(selectedDate).getUTCDate()
       );
     }
+    
 
     return files.length > 0 ? filteredData : [];
   }, [files, searchText, selectedDate]);
@@ -54,7 +55,7 @@ const UserManagement = () => {
   const handleDelete = async (id) => {
     if (window.confirm("Do you want to delete this user?")) {
       try {
-        await axios.delete(`https://jsonplaceholder.typicode.com/posts/${id}`);
+        await axios.delete(`https://jsonplaceholder.typicode.com/users/${id}`);
         setFiles(files.filter((file) => file.id !== id));
       } catch (error) {
         alert("Error deleting file!");
@@ -73,7 +74,7 @@ const UserManagement = () => {
       <div className="flex mb-4">
         <input
           type="text"
-          placeholder="Search by name or type"
+          placeholder="Search by email or phone"
           className="border p-2 mr-2"
           value={searchText}
           onChange={handleSearchChange}
@@ -92,8 +93,9 @@ const UserManagement = () => {
       <table className="table-auto w-full">
         <thead>
           <tr>
-            <th>Email</th>
             <th>Name</th>
+            <th>Email</th>
+            <th>Date of birth</th>
             <th>Address</th>
             <th>Phone</th>
             <th>Role</th>
@@ -102,10 +104,11 @@ const UserManagement = () => {
         <tbody>
           {filteredFiles.map((file) => (
             <tr key={file.name} className="border-b hover:bg-gray-100">
-              <td className="p-2">{file.title}</td>
-              <td className="p-2">{file.userId}</td>
-              <td className="p-2">{file.body}</td>
-              <td className="p-2">{file.id}</td>
+              <td className="p-2">{file.name}</td>
+              <td className="p-2">{file.email}</td>
+              <td className="p-2">YYYY-MM-DD</td>
+              <td className="p-2">{file.address.street}, {file.address.city} City</td>
+              <td className="p-2">{file.phone}</td>
               <td className="p-2">Role</td>
               <td className="p-2">
                 {file.id && (

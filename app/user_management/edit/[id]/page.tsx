@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 
 const EditUserPage = ({ params} : any) => {
-  const [title, setTitle] = useState("");
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [dob, setDob] = useState("");
@@ -14,14 +13,13 @@ const EditUserPage = ({ params} : any) => {
   const router = useRouter();
 
   useEffect (() => {
-    axios.get(`https://jsonplaceholder.typicode.com/posts/${params.id}`)
+    axios.get(`https://jsonplaceholder.typicode.com/users/${params.id}`)
     .then(response => {
       setEmail(response.data.email);
       setName(response.data.name);
       setDob(response.data.dob);
       setPhone(response.data.phone);
       setRole(response.data.role);
-      setTitle(response.data.title)
     })
     .catch (error => console.error(`There was an error retrieving the user: ${error}`));
   }, [params.id])
@@ -29,13 +27,14 @@ const EditUserPage = ({ params} : any) => {
   const updateUser = (e) => {
     e.preventDefault();
 
-    axios.put(`https://jsonplaceholder.typicode.com/posts/${params.id}`,{
+    
+
+    axios.put(`https://jsonplaceholder.typicode.com/users/${params.id}`,{
       email: email,
       name: name,
       dob: dob,
       phone: phone,
       role: role,
-      title: title
     })
     .then(response => {
       console.log(response);
@@ -57,14 +56,14 @@ const EditUserPage = ({ params} : any) => {
             </label>
             <input
               type="text"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="w-full border border-gray-300 rounded-md py-2 px-4"
             />
           </div>
           <div className="mb-6">
             <label className="block mb-2">
-              Name: 
+              Name:
             </label>
             <input
               type="text"
@@ -89,7 +88,7 @@ const EditUserPage = ({ params} : any) => {
               Phone
             </label>
             <input
-              type="number"
+              type="text"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               className="w-full border border-gray-300 rounded-md py-2 px-4"
