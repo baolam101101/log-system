@@ -3,7 +3,7 @@ import axios from "axios";
 import { useState } from "react";
 
 const ChangePasswordPage = ({ params }: any) => {
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState(""); 
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 

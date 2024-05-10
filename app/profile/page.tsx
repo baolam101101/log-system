@@ -9,7 +9,6 @@ const ProfilePage = () => {
 
   const handleForgotPassword = () => {
     setForgotPassword(true);
-    // Thêm logic để xử lý quên mật khẩu tại đây
   };
 
   return (

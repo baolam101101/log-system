@@ -9,6 +9,7 @@ import axios from "axios";
 const RegisterPage = () => {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
+  const [dob, setDob] = useState('');
   const [address, setAddress] = useState('');
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
@@ -26,17 +27,19 @@ const RegisterPage = () => {
     const registerData = {
       email,
       name,
+      dob,
       address,
       phone,
       password,
       confirmPassword
     };
+    console.log(registerData)
 
     try {
     const response = await axios.post("/api/auth/login", registerData);
-
+    
     if (response.data.success) {
-      router.push("/");
+      router.push("/accounts/login");
     } else {
       alert(response.data.message || "Register failed!");
     }
@@ -53,7 +56,7 @@ const RegisterPage = () => {
         <h1 className="text-2xl font-bold mb-4">Register</h1>
         <form onSubmit={handleSubmit}>
           <div className="mb-6">
-            <label htmlFor="email" className="block mb-2">Email</label>
+            <label htmlFor="email" className="block mb-1">Email</label>
             <input
               type="email"
               id="email"
@@ -64,7 +67,7 @@ const RegisterPage = () => {
             />
           </div>
           <div className="mb-6">
-            <label htmlFor="name" className="block mb-2">Name</label>
+            <label htmlFor="name" className="block mb-1">Name</label>
             <input
               type="text"
               id="name"
@@ -75,7 +78,18 @@ const RegisterPage = () => {
             />
           </div>
           <div className="mb-6">
-            <label htmlFor="address" className="block mb-2">Address</label>
+            <label htmlFor="dob" className="block mb-1">Date of birth</label>
+            <input
+              type="date"
+              id="dob"
+              name="dob"
+              value={dob}
+              onChange={(e) => setDob(e.target.value)}
+              className="w-full border border-gray-300 rounded-md py-2 px-4"
+            />
+          </div>
+          <div className="mb-6">
+            <label htmlFor="address" className="block mb-1">Address</label>
             <input
               type="text"
               id="address"
@@ -86,7 +100,7 @@ const RegisterPage = () => {
             />
           </div>
           <div className="mb-6">
-            <label htmlFor="phone" className="block mb-2">Phone</label>
+            <label htmlFor="phone" className="block mb-1">Phone</label>
             <input
               type="number"
               id="phone"
@@ -97,7 +111,7 @@ const RegisterPage = () => {
             />
           </div>
           <div className="mb-6">
-            <label htmlFor="password" className="block mb-2">Password</label>
+            <label htmlFor="password" className="block mb-1">Password</label>
             <input
               type="password"
               id="password"
@@ -108,7 +122,7 @@ const RegisterPage = () => {
             />
           </div>
           <div className="mb-6">
-            <label htmlFor="confirmPassword" className="block mb-2">
+            <label htmlFor="confirmPassword" className="block mb-1">
               Confirm Password
             </label>
             <input

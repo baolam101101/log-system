@@ -10,9 +10,8 @@ function FileDetails( {params}: any ) {
     const getFileById = async () => {
       try {
         const {data} = await axios.get(
-          `https://jsonplaceholder.typicode.com/posts/${params.id}`
+          `https://2af8-115-78-231-117.ngrok-free.app/detail/${params.id}`
         );
-        // const res = await axios.get(`/api/files/${id}`);
         setFileDetails(data);
       } catch (error) {
         console.error(error);
@@ -30,7 +29,7 @@ function FileDetails( {params}: any ) {
         <div className="container m-auto p-8">
           <h1 className="text-2xl font-bold mb-4 text-center">File Details</h1>
           <div className="flex flex-col mb-4">
-            <p className="font-bold">Name: {fileDetails.id}</p>
+            <p className="font-bold">Name: {fileDetails.name}</p>
           </div>
           <div className="flex flex-col mb-4">
             <p className="font-bold">Type: {fileDetails.type}</p>
@@ -38,6 +37,11 @@ function FileDetails( {params}: any ) {
           <div className="flex flex-col mb-4">
             <p className="font-bold">
               Date Created: {new Date(fileDetails.dateCreated).toLocaleString()}
+            </p>
+          </div>
+          <div className="flex flex-col mb-4">
+            <p className="font-bold">
+            Storage Size: {fileDetails.storageSize}
             </p>
           </div>
           <div className="flex flex-col mb-4">

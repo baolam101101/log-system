@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 
-const EditUserPage = ({ params} : any) => {
+const EditUserPage = ({ params }: any) => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [dob, setDob] = useState("");
@@ -12,37 +12,43 @@ const EditUserPage = ({ params} : any) => {
   const [role, setRole] = useState("");
   const router = useRouter();
 
-  useEffect (() => {
-    axios.get(`https://jsonplaceholder.typicode.com/users/${params.id}`)
-    .then(response => {
-      setEmail(response.data.email);
-      setName(response.data.name);
-      setDob(response.data.dob);
-      setPhone(response.data.phone);
-      setRole(response.data.role);
-    })
-    .catch (error => console.error(`There was an error retrieving the user: ${error}`));
-  }, [params.id])
+  useEffect(() => {
+    const EditData = async () => {
+      try {
+        const res = await axios.get(
+          `https://jsonplaceholder.typicode.com/users/${params.id}`
+        );
+        setEmail(res.data.email);
+        setName(res.data.name);
+        setDob(res.data.dob);
+        setPhone(res.data.phone);
+        setRole(res.data.role);
+      } catch (error) {
+        console.error(`There was an error retrieving the user: ${error}`);
+      }
+    };
+    EditData();
+  }, [params.id]);
 
-  const updateUser = (e) => {
+  const updateUser = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    
-
-    axios.put(`https://jsonplaceholder.typicode.com/users/${params.id}`,{
-      email: email,
-      name: name,
-      dob: dob,
-      phone: phone,
-      role: role,
-    })
-    .then(response => {
-      console.log(response);
+    try {
+      const res = await axios.put(
+        `https://jsonplaceholder.typicode.com/users/${params.id}`,
+        {
+          email: email,
+          name: name,
+          dob: dob,
+          phone: phone,
+          role: role,
+        }
+      );
+      console.log(res);
       router.push("/user_management");
-    })
-    .catch(error => {
+    } catch (error) {
       console.error(`There was an error updating the user: ${error}`);
-    });
+    }
   };
 
   return (
@@ -51,9 +57,7 @@ const EditUserPage = ({ params} : any) => {
         <h1 className="text-2xl font-bold mb-4">Update User</h1>
         <form onSubmit={updateUser}>
           <div className="mb-4">
-            <label>
-              Email: 
-            </label>
+            <label>Email:</label>
             <input
               type="text"
               value={email}
@@ -62,9 +66,7 @@ const EditUserPage = ({ params} : any) => {
             />
           </div>
           <div className="mb-6">
-            <label className="block mb-2">
-              Name:
-            </label>
+            <label className="block mb-2">Name:</label>
             <input
               type="text"
               value={name}
@@ -73,9 +75,7 @@ const EditUserPage = ({ params} : any) => {
             />
           </div>
           <div className="mb-6">
-            <label className="block mb-2">
-              Date of birth
-            </label>
+            <label className="block mb-2">Date of birth</label>
             <input
               type="date"
               value={dob}
@@ -84,9 +84,7 @@ const EditUserPage = ({ params} : any) => {
             />
           </div>
           <div className="mb-6">
-            <label className="block mb-2">
-              Phone
-            </label>
+            <label className="block mb-2">Phone</label>
             <input
               type="text"
               value={phone}
@@ -95,9 +93,7 @@ const EditUserPage = ({ params} : any) => {
             />
           </div>
           <div className="mb-6">
-            <label className="block mb-2">
-              Role
-            </label>
+            <label className="block mb-2">Role</label>
             <select
               id="role"
               onChange={(e) => setRole(e.target.value)}

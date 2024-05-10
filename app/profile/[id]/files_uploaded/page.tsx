@@ -1,9 +1,45 @@
-import React from 'react'
+"use client";
 
-export default function page() {
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+
+const FileUploadedPage = ({ params }: any) => {
+  const [files, setFiles] = useState([]);
+
+  useEffect(() => {
+    const FileUploaded = async () => {
+      try {
+        const res = await axios.get(
+          `https://jsonplaceholder.typicode.com/users/${params.id}`
+          
+        );
+        setFiles(res.data);
+      } catch (err) { 
+        console.log(err);
+      }
+    };
+    FileUploaded();
+  }, [params.id]);
+
   return (
     <div>
-      <h1>Hello</h1>
+      <table className="table-auto w-full">
+        <thead>
+          <tr>
+            <th>Name</th>
+          </tr> 
+        </thead>
+        <tbody>
+          {files.map((file) => (
+            <tr key={file.name} className="border-b hover:bg-gray-100">
+              <td className="p-2">{file.title}</td>
+              
+            </tr> 
+          ))}
+        </tbody>
+      </table>
     </div>
-  )
-}
+  );
+};
+
+export default FileUploadedPage;

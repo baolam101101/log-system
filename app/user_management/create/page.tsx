@@ -10,6 +10,7 @@ const CreateUserPage = () => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [dob, setDob] = useState("");
+  const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -28,6 +29,7 @@ const CreateUserPage = () => {
       email,
       name,
       dob,
+      address,
       phone,
       password,
       confirmPassword,
@@ -51,6 +53,7 @@ const CreateUserPage = () => {
     setEmail("");
     setName("");
     setDob("");
+    setAddress("");
     setPhone("");
     setPassword("");
     setConfirmPassword("");
@@ -63,7 +66,7 @@ const CreateUserPage = () => {
         <h1 className="text-2xl font-bold mb-4">Create User</h1>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label htmlFor="email" className="block mb-2">
+            <label htmlFor="email" className="block mb-1">
               Email
             </label>
             <input
@@ -76,7 +79,7 @@ const CreateUserPage = () => {
             />
           </div>
           <div className="mb-6">
-            <label htmlFor="name" className="block mb-2">
+            <label htmlFor="name" className="block mb-1">
               Name
             </label>
             <input
@@ -89,7 +92,7 @@ const CreateUserPage = () => {
             />
           </div>
           <div className="mb-6">
-            <label htmlFor="dob" className="block mb-2">
+            <label htmlFor="dob" className="block mb-1">
               Date of birth
             </label>
             <input
@@ -102,7 +105,20 @@ const CreateUserPage = () => {
             />
           </div>
           <div className="mb-6">
-            <label htmlFor="phone" className="block mb-2">
+            <label htmlFor="address" className="block mb-1">
+              Address
+            </label>
+            <input
+              type="text"
+              id="address"
+              name="address"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              className="w-full border border-gray-300 rounded-md py-2 px-4"
+            />
+          </div>
+          <div className="mb-6">
+            <label htmlFor="phone" className="block mb-1">
               Phone
             </label>
             <input
@@ -115,7 +131,7 @@ const CreateUserPage = () => {
             />
           </div>
           <div className="mb-6">
-            <label htmlFor="password" className="block mb-2">
+            <label htmlFor="password" className="block mb-1">
               Password
             </label>
             <input
@@ -128,7 +144,7 @@ const CreateUserPage = () => {
             />
           </div>
           <div className="mb-6">
-            <label htmlFor="confirmPassword" className="block mb-2">
+            <label htmlFor="confirmPassword" className="block mb-1">
               Confirm Password
             </label>
             <input
@@ -141,7 +157,7 @@ const CreateUserPage = () => {
             />
           </div>
           <div className="mb-6">
-            <label htmlFor="role" className="block mb-2">
+            <label htmlFor="role" className="block mb-1">
               Role
             </label>
             <select

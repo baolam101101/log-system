@@ -10,24 +10,27 @@ const ProfilePage = ({ params }: any) => {
   const [phone, setPhone] = useState("");
 
   useEffect(() => {
-    axios
-      .get(`https://jsonplaceholder.typicode.com/users/${params.id}`)
-      .then((res) => {
+    const ProfileData = async () => {
+      try {
+        const res = await axios.get(
+          `https://jsonplaceholder.typicode.com/users/${params.id}`
+        );
         setEmail(res.data.email);
         setName(res.data.name);
         setDob(res.data.dob);
         setAddress(res.data.address);
         setPhone(res.data.phone);
-      })
-      .catch((error) =>
-        console.error(`There was an error retrieving the use: ${error}`)
-      );
+      } catch (error) {
+        console.error(`There was an error retrieving the use: ${error}`);
+      }
+    };
+    ProfileData();
   }, [params.id]);
 
-  const editUser = (e) => {
+  const editUser = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    axios
+    await axios
       .put(`https://jsonplaceholder.typicode.com/users/${params.id}`, {
         email: email,
         name: name,
@@ -70,52 +73,52 @@ const ProfilePage = ({ params }: any) => {
       <div className="flex-1 flex flex-col items-center min-h-screen p-4">
         <h1 className="text-2xl font-bold mb-5">Profile</h1>
         <form onSubmit={editUser}>
-        <div className="flex flex-col mb-4">
-          <label className="mb-2">Email:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="px-3 py-2 border border-gray-300"
-          />
-        </div>
-        <div className="flex flex-col mb-4">
-          <label className="mb-2">Name:</label>
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="px-3 py-2 border border-gray-300"
-          />
-        </div>
-        <div className="flex flex-col mb-4">
-          <label className="mb-2">Dob:</label>
-          <input
-            type="date"
-            value={dob}
-            onChange={(e) => setDob(e.target.value)}
-            className="px-3 py-2 border border-gray-300"
-          />
-        </div>
-        <div className="flex flex-col mb-4">
-          <label className="mb-2">Address:</label>
-          <input
-            type="text"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-            className="px-3 py-2 border border-gray-300"
-          />
-        </div>
-        <div className="flex flex-col mb-4">
-          <label className="mb-2">Phone:</label>
-          <input
-            type="text"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            className="px-3 py-2 border border-gray-300"
-          />
-        </div>
-        <div className="flex justify-between">
+          <div className="flex flex-col mb-4">
+            <label className="mb-2">Email:</label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="px-3 py-2 border border-gray-300"
+            />
+          </div>
+          <div className="flex flex-col mb-4">
+            <label className="mb-2">Name:</label>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="px-3 py-2 border border-gray-300"
+            />
+          </div>
+          <div className="flex flex-col mb-4">
+            <label className="mb-2">Dob:</label>
+            <input
+              type="date"
+              value={dob}
+              onChange={(e) => setDob(e.target.value)}
+              className="px-3 py-2 border border-gray-300"
+            />
+          </div>
+          <div className="flex flex-col mb-4">
+            <label className="mb-2">Address:</label>
+            <input
+              type="text"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              className="px-3 py-2 border border-gray-300"
+            />
+          </div>
+          <div className="flex flex-col mb-4">
+            <label className="mb-2">Phone:</label>
+            <input
+              type="text"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              className="px-3 py-2 border border-gray-300"
+            />
+          </div>
+          <div className="flex justify-between">
             <button
               type="submit"
               className="bg-blue-500 text-white rounded-md py-2 px-4 hover:bg-blue-600 flex-grow"

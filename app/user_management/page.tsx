@@ -12,7 +12,12 @@ const UserManagement = () => {
     const fetchData = async () => {
       try {
         const { data } = await axios.get(
-          `https://jsonplaceholder.typicode.com/users`
+          `https://7817-115-78-231-117.ngrok-free.app/user`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
         );
         setFiles(data);
       } catch (err) {
@@ -24,22 +29,23 @@ const UserManagement = () => {
 
   const filteredFiles = React.useMemo(() => {
     let filteredData = files;
-
+ 
     if (searchText) {
-      filteredData = filteredData.filter((file) =>
-        file.email.toLowerCase().includes(searchText.toLowerCase()) ||
-        file.phone.toLowerCase().includes(searchText.toLowerCase())
+      filteredData = filteredData.filter(
+        (file) =>
+          file.email.toLowerCase().includes(searchText.toLowerCase()) ||
+          file.role.toLowerCase().includes(searchText.toLowerCase())
       );
     }
 
     if (selectedDate) {
       filteredData = filteredData.filter(
         (file) =>
-          file.dob && new Date(file.dob.toISOString()).getUTCDate() ===
-          new Date(selectedDate).getUTCDate()
+          file.dob &&
+          new Date(file.dob.toISOString()).getUTCDate() ===
+            new Date(selectedDate).getUTCDate()
       );
     }
-    
 
     return files.length > 0 ? filteredData : [];
   }, [files, searchText, selectedDate]);
@@ -74,7 +80,7 @@ const UserManagement = () => {
       <div className="flex mb-4">
         <input
           type="text"
-          placeholder="Search by email or phone"
+          placeholder="Search by email or role"
           className="border p-2 mr-2"
           value={searchText}
           onChange={handleSearchChange}
@@ -104,10 +110,12 @@ const UserManagement = () => {
         <tbody>
           {filteredFiles.map((file) => (
             <tr key={file.name} className="border-b hover:bg-gray-100">
-              <td className="p-2">{file.name}</td>
-              <td className="p-2">{file.email}</td>
+              <td className="p-2">{file.id}</td>
+              <td className="p-2">{file.username}</td>
               <td className="p-2">YYYY-MM-DD</td>
-              <td className="p-2">{file.address.street}, {file.address.city} City</td>
+              <td className="p-2">
+                {file.address.street}, {file.address.city} City
+              </td>
               <td className="p-2">{file.phone}</td>
               <td className="p-2">Role</td>
               <td className="p-2">

@@ -2,98 +2,37 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const Files = () => {
   const [files, setFiles] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [selectedDate, setSelectedDate] = useState(null);
-  //   const data = [
-  //     {
-  //       id: 1,
-  //       name: "File 1",
-  //       type: "Đây là file 1",
-  //       datetime: new Date("2024-04-04T10:58:00+07:00"),
-  //       storageSize: 123456,
-  //     },
-  //     {
-  //       id: 2,
-  //       name: "File 2",
-  //       type: "Đây là file 2",
-  //       datetime: new Date("2024-06-03T11:00:00+07:00"),
-  //       storageSize: 654321,
-  //     },
-  //     {
-  //       id: 3,
-  //       name: "File 3",
-  //       type: "Đây là file 3",
-  //       datetime: new Date("2024-02-08:23:15+07:00"),
-  //       storageSize: 986124,
-  //     },
-  //     {
-  //       id: 4,
-  //       name: "File 4",
-  //       type: "Đây là file 4",
-  //       datetime: new Date("2024-06-03T06:11:42+07:00"),
-  //       storageSize: 876742,
-  //     },
-  //     {
-  //       id: 5,
-  //       name: "File 5",
-  //       type: "Đây là file 5",
-  //       datetime: new Date("2024-04-24T05:29:00+07:00"),
-  //       storageSize: 907124,
-  //     },
-  //     {
-  //       id: 6,
-  //       name: "File 6",
-  //       type: "Đây là file 6",
-  //       datetime: new Date("2024-09-13T02:30:03+07:00"),
-  //       storageSize: 248976,
-  //     },
-  //     {
-  //       id: 7,
-  //       name: "File 7",
-  //       type: "Đây là file 7",
-  //       datetime: new Date("2024-11-30T10:10:40+07:00"),
-  //       storageSize: 498712,
-  //     },
-  //     {
-  //       id: 8,
-  //       name: "File 8",
-  //       type: "Đây là file 8",
-  //       datetime: new Date("2024-09-11T01:24:12+07:00"),
-  //       storageSize: 541242,
-  //     },
-  //     {
-  //       id: 9,
-  //       name: "File 9",
-  //       type: "Đây là file 9",
-  //       datetime: new Date("2024-09-20T09:17:47+07:00"),
-  //       storageSize: 498712,
-  //     },
-  //     {
-  //       id: 10,
-  //       name: "File 10",
-  //       type: "Đây là file 10",
-  //       datetime: new Date("2024-06-20T04:37:58+07:00"),
-  //       storageSize: 541242,
-  //     },
-  //   ];
+  const [refresh, setRefresh] = useState(false); 
 
-  //   setFiles(data);
-  // }, []);
-
-    useEffect(() => {
+  useEffect(() => {
     const fetchData = async () => {
       try {
-        const {data} = await axios.get(`https://jsonplaceholder.typicode.com/posts`);
+        const res = await axios.get(
+          `https://2af8-115-78-231-117.ngrok-free.app/file`,
+          {
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              "ngrok-skip-browser-warning": "69420",
+            },
+          }
+        );
+        const data = res.data;
+        console.log(res);
         setFiles(data);
+        console.log(data);
       } catch (err) {
         console.error("Error fetching files:", err);
       }
     };
     fetchData();
-  }, [searchText, selectedDate]);
+  }, [searchText, selectedDate, refresh]);
 
   const filteredFiles = React.useMemo(() => {
     let filteredData = files;
@@ -128,13 +67,15 @@ const Files = () => {
   const handleDelete = async (id) => {
     if (window.confirm("Do you want to delete this file?")) {
       try {
-        await axios.delete(`https://jsonplaceholder.typicode.com/posts/${id}`);
+        await axios.delete(`https://2af8-115-78-231-117.ngrok-free.app/file/${id}`);
         setFiles(files.filter((file) => file.id !== id));
+        setRefresh(!refresh);
       } catch (error) {
         alert("Error deleting file!");
       }
     }
   };
+  
 
   return (
     <div className="container mx-auto p-8">
@@ -175,10 +116,11 @@ const Files = () => {
         <tbody>
           {filteredFiles.map((file) => (
             <tr key={file.name} className="border-b hover:bg-gray-100">
-              <td className="p-2">{file.title}</td>
+              <td className="p-2">{file.name}</td>
               <td className="p-2">{file.type}</td>
-              {/* <td className="p-2">{file.datetime.toLocaleString()}</td> */}
-              <td className="p-2">{file.id} bytes</td>
+              <td className="p-2">{file.datetime.toLocaleString()}</td>
+              <td className="p-2">{file.storageSize} bytes</td>
+              <td className="p-2">{file.createdBy} </td>
               <td className="p-2">
                 {file.id && (
                   <Link href={`/files/detail/${file.id}`}>
