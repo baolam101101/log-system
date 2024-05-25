@@ -36,7 +36,7 @@ const RegisterPage = () => {
     console.log(registerData)
 
     try {
-    const response = await axios.post("/api/auth/login", registerData);
+    const response = await axios.post("https://0e14-115-78-231-117.ngrok-free.app/register", registerData);
     
     if (response.data.success) {
       router.push("/accounts/login");

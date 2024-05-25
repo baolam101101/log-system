@@ -13,7 +13,14 @@ const ProfilePage = ({ params }: any) => {
     const ProfileData = async () => {
       try {
         const res = await axios.get(
-          `https://jsonplaceholder.typicode.com/users/${params.id}`
+          `https://jsonplaceholder.typicode.com/users/${params.id}`,
+          {
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              "ngrok-skip-browser-warning": "69420",
+            },
+          }
         );
         setEmail(res.data.email);
         setName(res.data.name);

@@ -1,52 +1,31 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import Link from "next/link";
 
-const UserManagement = () => {
-  const [files, setFiles] = useState([]);
+const FileList = ({ files: initialFiles }) => {
+  const [files, setFiles] = useState(initialFiles || []);
   const [searchText, setSearchText] = useState("");
   const [selectedDate, setSelectedDate] = useState(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const { data } = await axios.get(
-          `https://0e14-115-78-231-117.ngrok-free.app/user`,
-          {
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-              "ngrok-skip-browser-warning": "69420",
-            },
-          }
-        );
-        setFiles(data);
-      } catch (err) {
-        console.error("Error fetching files:", err);
-      }
-    };
-    fetchData();
-  }, [searchText, selectedDate]);
+  const [refresh, setRefresh] = useState(false);
 
   const filteredFiles = React.useMemo(() => {
     let filteredData = files;
- 
+
     if (searchText) {
       filteredData = filteredData.filter(
         (file) =>
           file.email.toLowerCase().includes(searchText.toLowerCase()) ||
-          file.role.toLowerCase().includes(searchText.toLowerCase())
+          file.name.toLowerCase().includes(searchText.toLowerCase())
       );
     }
 
     if (selectedDate) {
       filteredData = filteredData.filter(
         (file) =>
-          file.dob &&
-          new Date(file.dob.toISOString()).getUTCDate() ===
-            new Date(selectedDate).getUTCDate()
+          new Date(file.datetime.toISOString()).getUTCDate() ===
+          new Date(selectedDate).getUTCDate()
       );
     }
 
@@ -62,16 +41,19 @@ const UserManagement = () => {
   };
 
   const handleDelete = async (id) => {
-    if (window.confirm("Do you want to delete this user?")) {
+    if (window.confirm("Do you want to delete this file?")) {
       try {
-        await axios.delete(`https://0e14-115-78-231-117.ngrok-free.app/users/${id}`);
+        await axios.delete(
+          `https://d55d-2402-800-63a6-b82f-115e-4169-a78c-c61a.ngrok-free.app/file/${id}`
+        );
         setFiles(files.filter((file) => file.id !== id));
+        setRefresh(!refresh);
       } catch (error) {
         alert("Error deleting file!");
       }
     }
   };
-
+  
   return (
     <div className="container mx-auto p-8">
       {/* <Link href="/accounts/login">
@@ -79,11 +61,11 @@ const UserManagement = () => {
           Log out
         </button>
       </Link> */}
-      <h1 className="text-2xl font-bold mb-4 text-center">User Management</h1>
+      <h1 className="text-2xl font-bold mb-4 text-center">Files List</h1>
       <div className="flex mb-4">
         <input
           type="text"
-          placeholder="Search by email or role"
+          placeholder="Search by name or type"
           className="border p-2 mr-2"
           value={searchText}
           onChange={handleSearchChange}
@@ -94,36 +76,42 @@ const UserManagement = () => {
         />
       </div>
       <a
-        href="user_management/create"
+        href="files/create"
         className="border p-2 bg-black text-white float-right bg-blue-600"
       >
-        Create User
+        Upload file
       </a>
       <table className="table-auto w-full">
         <thead>
           <tr>
+            <th>Id</th>
             <th>Name</th>
-            <th>Email</th>
-            <th>Date of birth</th>
-            <th>Address</th>
-            <th>Phone</th>
-            <th>Role</th>
+            <th>Type</th>
+            <th>Date Time</th>
+            <th>Storage Size</th>
           </tr>
         </thead>
         <tbody>
           {filteredFiles.map((file) => (
             <tr key={file.name} className="border-b hover:bg-gray-100">
-              <td className="p-2">{file.name}</td>
-              <td className="p-2">{file.email}</td>
-              <td className="p-2">{file.dob}</td>
-              <td className="p-2">
-                {file.address}
+              <td className="p-2 text-center">{file.id}</td>
+              <td className="p-2 text-center">{file.name}</td>
+              <td className="p-2 text-center">{file.type}</td>
+              <td className="p-2 text-center">{file.datetime.toLocaleString()}</td>
+              <td className="p-2 text-center">{file.storageSize} bytes</td>
+              <td className="p-2 text-center">{file.createdBy} </td>
+              <td className="p-2 text-center">
+                {file.id && (
+                  <Link href={`/files/detail/${file.id}`}>
+                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                      Detail
+                    </button>
+                  </Link>
+                )}
               </td>
-              <td className="p-2">{file.phone}</td>
-              <td className="p-2">{file.role}</td>
               <td className="p-2">
                 {file.id && (
-                  <Link href={`/user_management/edit/${file.id}`}>
+                  <Link href={`/files/edit/${file.id}`}>
                     <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
                       Edit
                     </button>
@@ -151,4 +139,4 @@ const UserManagement = () => {
   );
 };
 
-export default UserManagement;
+export default FileList;

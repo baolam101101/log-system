@@ -10,8 +10,14 @@ const FileUploadedPage = ({ params }: any) => {
     const FileUploaded = async () => {
       try {
         const res = await axios.get(
-          `https://jsonplaceholder.typicode.com/users/${params.id}`
-          
+          `https://jsonplaceholder.typicode.com/users/${params.id}`,
+          {
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              "ngrok-skip-browser-warning": "69420",
+            },
+          }
         );
         setFiles(res.data);
       } catch (err) { 

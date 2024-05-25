@@ -16,13 +16,21 @@ const EditUserPage = ({ params }: any) => {
     const EditData = async () => {
       try {
         const res = await axios.get(
-          `https://jsonplaceholder.typicode.com/users/${params.id}`
+          `https://0e14-115-78-231-117.ngrok-free.app/user/${params.id}`,
+          {
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              "ngrok-skip-browser-warning": "69420",
+            },
+          }
         );
         setEmail(res.data.email);
         setName(res.data.name);
         setDob(res.data.dob);
         setPhone(res.data.phone);
         setRole(res.data.role);
+        console.log(res)
       } catch (error) {
         console.error(`There was an error retrieving the user: ${error}`);
       }
@@ -35,7 +43,7 @@ const EditUserPage = ({ params }: any) => {
 
     try {
       const res = await axios.put(
-        `https://jsonplaceholder.typicode.com/users/${params.id}`,
+        `https://0e14-115-78-231-117.ngrok-free.app/user/edit/${params.id}`,
         {
           email: email,
           name: name,

@@ -29,7 +29,7 @@ function CreateFileForm() {
       formData.append("files", files);
       console.log(files)
       try {
-        const response = await axios.post("/api/files/create", formData, {
+        const response = await axios.post("https://d55d-2402-800-63a6-b82f-115e-4169-a78c-c61a.ngrok-free.app/file/create", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },

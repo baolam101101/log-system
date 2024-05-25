@@ -10,7 +10,14 @@ function FileDetails( {params}: any ) {
     const getFileById = async () => {
       try {
         const {data} = await axios.get(
-          `https://2af8-115-78-231-117.ngrok-free.app/detail/${params.id}`
+          `https://d55d-2402-800-63a6-b82f-115e-4169-a78c-c61a.ngrok-free.app/file/detail/${params.id}`, 
+          {
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              "ngrok-skip-browser-warning": "69420",
+            },
+          }
         );
         setFileDetails(data);
       } catch (error) {
@@ -36,7 +43,7 @@ function FileDetails( {params}: any ) {
           </div>
           <div className="flex flex-col mb-4">
             <p className="font-bold">
-              Date Created: {new Date(fileDetails.dateCreated).toLocaleString()}
+              Date Created: {new Date(fileDetails.datetime).toLocaleString()}
             </p>
           </div>
           <div className="flex flex-col mb-4">
